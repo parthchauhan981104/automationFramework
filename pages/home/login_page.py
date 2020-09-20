@@ -1,7 +1,10 @@
-from selenium.webdriver.common.by import By
 from base.selenium_driver import SeleniumDriver
+import utilities.custom_logger as cl
+import logging
 
 class LoginPage(SeleniumDriver):
+
+    log = cl.customLogger(logging.DEBUG) #override the SeleniumDriver log instance
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -13,17 +16,6 @@ class LoginPage(SeleniumDriver):
     _password_field = "user_password"
     _login_button = "commit"
 
-    # def getLoginLink(self):
-    #     return self.driver.find_element(By.LINK_TEXT, self._login_link)
-    #
-    # def getEmailField(self):
-    #     return self.driver.find_element(By.ID, self._email_field)
-    #
-    # def getPasswordField(self):
-    #     return self.driver.find_element(By.ID, self._password_field)
-    #
-    # def getLoginButton(self):
-    #     return self.driver.find_element(By.NAME, self._login_button)
 
     def clickLoginLink(self):
         self.elementClick(self._login_link, locatorType="link")
@@ -37,8 +29,24 @@ class LoginPage(SeleniumDriver):
     def clickLoginButton(self):
         self.elementClick(self._login_button, locatorType="name")
 
-    def login(self, email, password):
+    def login(self, email="", password=""):
         self.clickLoginLink()
         self.enterEmail(email)
         self.enterPassword(password)
         self.clickLoginButton()
+
+    def verifyLoginSuccessful(self):
+        result = self.isElementPresent("//*[@id='navbar']//span[text()='User Settings']",
+                                       locatorType="xpath")
+        return result
+
+    def verifyLoginFailed(self):
+        result = self.isElementPresent("//div[contains(text(),'Invalid email or password')]",
+                                       locatorType="xpath")
+        return result
+
+    def clearFields(self):
+        emailField = self.getElement(locator=self._email_field)
+        emailField.clear()
+        passwordField = self.getElement(locator=self._password_field)
+        passwordField.clear()
