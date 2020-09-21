@@ -1,7 +1,6 @@
 import pytest
-from selenium import webdriver
 from base.webdriver_factory import WebDriverFactory
-import os
+from pages.home.login_page import LoginPage
 
 @pytest.yield_fixture()
 def setUp():
@@ -15,6 +14,8 @@ def oneTimeSetUp(request, browser):
     print("Running one time setUp")
     wdf = WebDriverFactory(browser)
     driver = wdf.getWebDriverInstance()
+    lp = LoginPage(driver)
+    lp.login("gamerboy09pc@gmail.com", "letskodeit")
 
     if request.cls is not None:
         request.cls.driver = driver
