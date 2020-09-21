@@ -1,8 +1,9 @@
 from base.selenium_driver import SeleniumDriver
 import utilities.custom_logger as cl
 import logging
+from base.base_page import BasePage
 
-class LoginPage(SeleniumDriver):
+class LoginPage(BasePage):
 
     log = cl.customLogger(logging.DEBUG) #override the SeleniumDriver log instance
 
@@ -51,8 +52,5 @@ class LoginPage(SeleniumDriver):
         passwordField = self.getElement(locator=self._password_field)
         passwordField.clear()
 
-    def verifyTitle(self):
-        if "Google" in self.getTitle():
-            return True
-        else:
-            return False
+    def verifyLoginTitle(self):
+        return self.verifyPageTitle("Google") #will fail
