@@ -21,9 +21,9 @@ class LoginTests(unittest.TestCase):
     def test_validLogin(self):
         self.lp.login("gamerboy09pc@gmail.com", "letskodeit")
         result1 = self.lp.verifyTitle()
-        self.ts.mark(result1, "Title Verified")
+        self.ts.mark(result1, "Title not Verified")
         result2 = self.lp.verifyLoginSuccessful()
-        self.ts.markFinal("test_validLogin", result2, "Login was successful")
+        self.ts.markFinal("test_validLogin", result2, "Login was not successful")
 
     @pytest.mark.run(order=1)
     def test_invalidLogin(self):
