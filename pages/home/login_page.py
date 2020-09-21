@@ -50,3 +50,9 @@ class LoginPage(SeleniumDriver):
         emailField.clear()
         passwordField = self.getElement(locator=self._password_field)
         passwordField.clear()
+
+    def verifyTitle(self):
+        if "Google" in self.getTitle():
+            return True
+        else:
+            return False
