@@ -6,7 +6,7 @@ import pytest
 #export PYTHONPATH=$(pwd)
 #or
 #export PYTHONPATH=$PYTHONPATH
-#py.test -s -v tests/home/login_tests.py --browser chrome
+#py.test -s -v tests/home/register_courses_tests.py --browser chrome
 
 @pytest.mark.usefixtures("oneTimeSetUp", "setUp")
 class RegisterCoursesTests(unittest.TestCase):
