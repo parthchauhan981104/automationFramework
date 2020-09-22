@@ -1,5 +1,6 @@
 from base.selenium_driver import SeleniumDriver
 import utilities.custom_logger as cl
+from pages.home.navigation_page import NavigationPage
 import logging
 from base.base_page import BasePage
 
@@ -10,6 +11,7 @@ class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
+        self.nav = NavigationPage(driver)
 
     # Locators
     _login_link = "Login"
@@ -53,4 +55,9 @@ class LoginPage(BasePage):
         passwordField.clear()
 
     def verifyLoginTitle(self):
-        return self.verifyPageTitle("Google") #will fail
+        return self.verifyPageTitle("Let's Kode It")
+
+    def logout(self):
+        self.nav.navigateToUserSettings()
+        self.elementClick(locator="//div[@id='navbar']//a[@href='/sign_out']",
+                          locatorType="xpath")
